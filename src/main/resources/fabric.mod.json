@@ -1,0 +1,25 @@
+{
+	"schemaVersion": 1,
+	"id": "soundscape",
+	"version": "${version}",
+	"name": "SoundScape",
+	"description": "Lightweight hybrid 3D audio, HRTF detection, occlusion and room processing for Fabric.",
+	"authors": [
+		"Zaineedyou"
+	],
+	"contact": {
+		"sources": "https://github.com/Zaineedyou/SoundScape"
+	},
+	"license": "SoundScape Source-Available License",
+	"environment": "client",
+	"entrypoints": {"client": ["com.zaineedyou.soundscape.SoundScapeClient"]},
+	"mixins": [
+		{"config": "soundscape.client.mixins.json", "environment": "client"}
+	],
+	"depends": {
+		"fabricloader": ">=0.19.3",
+		"minecraft": "~26.1.2",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}
