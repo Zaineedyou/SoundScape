@@ -4,9 +4,9 @@ Client-only Fabric audio spatializer for Minecraft **26.1.2**, designed for desk
 
 ## Features
 
-SoundScape uses Minecraft's existing OpenAL/LWJGL runtime, so it does not ship a second native audio library. It detects HRTF and EFX support at runtime, applies a lightweight 3D distance model when available, and falls back safely to vanilla-compatible stereo behavior on Android drivers that lack extensions. Settings are available in-game with the **O** key.
+SoundScape uses Minecraft's existing OpenAL/LWJGL runtime, so it does not ship a second native audio library. It detects HRTF and EFX support at runtime, applies a lightweight 3D distance model when available, and falls back safely to vanilla-compatible stereo behavior on Android drivers that lack extensions. Each played source is evaluated with three line-of-sight rays for block occlusion, while six room probes estimate the reverb send. Listener position/orientation is observed from Minecraft's camera. Settings are available in-game with the **O** key.
 
-The configuration file is `config/soundscape.properties`. All feature state changes, capability detection, fallback decisions, configuration loads/saves, and periodic health heartbeats are written with the `[SoundScape]` prefix to `logs/latest.log`.
+The configuration file is `config/soundscape.properties`. All feature state changes, capability detection, fallback decisions, per-source acoustic results, listener updates, configuration loads/saves, and periodic health heartbeats are written with the `[SoundScape]` prefix to `logs/latest.log`.
 
 ## Build
 
