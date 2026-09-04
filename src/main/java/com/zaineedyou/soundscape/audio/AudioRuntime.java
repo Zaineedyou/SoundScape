@@ -11,6 +11,7 @@ public final class AudioRuntime {
     private boolean openAl10;
     private boolean efx;
     private boolean hrtf;
+    private boolean capabilitiesReady;
     private long ticks;
 
     public AudioRuntime(SoundScapeConfig config) { this.config = config; }
@@ -31,15 +32,20 @@ public final class AudioRuntime {
             }
             SoundScape.LOGGER.info("[SoundScape][Audio] OpenAL10={} EFX={} HRTF-extension={} backend={}",
                     openAl10, efx, hrtf, safeBackend());
+            capabilitiesReady = true;
             if (config.hrtf && !hrtf) SoundScape.LOGGER.warn("[SoundScape][Audio] HRTF unavailable; using 3D stereo fallback");
             if (config.occlusion && !efx) SoundScape.LOGGER.warn("[SoundScape][Audio] EFX unavailable; occlusion uses lightweight fallback");
         } catch (Throwable t) {
-            SoundScape.LOGGER.warn("[SoundScape][Audio] OpenAL capability detection failed; vanilla-safe fallback active", t);
+            if (!capabilitiesReady)
+                SoundScape.LOGGER.debug("[SoundScape][Audio] OpenAL context not ready yet; will retry on client tick", t);
+            else
+                SoundScape.LOGGER.warn("[SoundScape][Audio] OpenAL capability detection failed; vanilla-safe fallback active", t);
         }
     }
 
     public void tick() {
         ticks++;
+        if (!capabilitiesReady && ticks % 20 == 0) initialize();
         if (config.debugLogging && ticks % 600 == 0)
             SoundScape.LOGGER.info("[SoundScape][Audio] heartbeat tick={} mode={} hrtf={} efx={} quality={}", ticks, mode(), hrtf, efx, config.quality);
     }
