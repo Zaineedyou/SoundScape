@@ -33,6 +33,7 @@ public final class AudioRuntime {
             SoundScape.LOGGER.info("[SoundScape][Audio] OpenAL10={} EFX={} HRTF-extension={} backend={}",
                     openAl10, efx, hrtf, safeBackend());
             capabilitiesReady = true;
+            SoundScape.EFX.initialize();
             if (config.hrtf && !hrtf) SoundScape.LOGGER.warn("[SoundScape][Audio] HRTF unavailable; using 3D stereo fallback");
             if (config.occlusion && !efx) SoundScape.LOGGER.warn("[SoundScape][Audio] EFX unavailable; occlusion uses lightweight fallback");
         } catch (Throwable t) {
@@ -51,6 +52,8 @@ public final class AudioRuntime {
     }
 
     public String mode() { return hrtf ? "HRTF+3D" : (openAl10 ? "3D-STEREO" : "VANILLA-FALLBACK"); }
+    public void applyEffects(int source) { SoundScape.EFX.apply(source, 1.0f, config.reverb ? 0.18f : 0.0f); }
+    public void applyEffects(int source, float occlusion, float reverbSend) { SoundScape.EFX.apply(source, occlusion, reverbSend); }
     private String safeBackend() {
         try { return AL.getCapabilities().OpenAL10 ? "OpenALC" : "unknown"; }
         catch (Throwable ignored) { return "Android/driver-dependent"; }

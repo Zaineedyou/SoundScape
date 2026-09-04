@@ -2,7 +2,7 @@
   "required": true,
   "package": "com.zaineedyou.soundscape.mixin",
   "compatibilityLevel": "JAVA_25",
-  "client": ["SoundEngineMixin"],
+  "client": ["SoundEngineMixin", "ChannelEffectsMixin", "ChannelSourceAccessorMixin"],
   "injectors": {"defaultRequire": 0},
   "overwrites": {"requireAnnotations": true}
 }

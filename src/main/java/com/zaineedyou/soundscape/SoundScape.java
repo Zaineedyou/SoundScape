@@ -1,6 +1,7 @@
 package com.zaineedyou.soundscape;
 
 import com.zaineedyou.soundscape.audio.AudioRuntime;
+import com.zaineedyou.soundscape.audio.EfxProcessor;
 import com.zaineedyou.soundscape.config.SoundScapeConfig;
 import net.minecraft.resources.Identifier;
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ public final class SoundScape {
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
     public static final SoundScapeConfig CONFIG = SoundScapeConfig.load();
     public static final AudioRuntime AUDIO = new AudioRuntime(CONFIG);
+    public static final EfxProcessor EFX = new EfxProcessor(CONFIG);
 
     private SoundScape() {}
 
